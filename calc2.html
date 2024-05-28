@@ -1,0 +1,314 @@
+ <!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <style>
+		@font-face {
+			font-family: "Czifra";
+			src: url("disket.ttf") format("truetype");
+			font-weight: normal;
+		}
+		
+            *{
+                box-sizing: border-box;
+                margin: 0px;
+                padding: 0px;
+				
+            }
+            .calc{
+               display: grid;
+               grid-template-columns: 1fr 1fr 1fr 1fr;
+               grid-template-rows: 20px 2fr 20px 1fr 1fr 1fr 1fr 1fr 1fr;
+               grid-auto-flow: row;
+               height: 100vh;
+               width: 100vh;
+               margin: auto;
+               border-style: solid;
+               border-color: brown;
+            }
+            .menu{
+                background-color: rgb(135, 206, 250);
+                border-style: solid;
+                border-color:rgb(205, 92, 92);
+                grid-column: span 4;
+                text-align: center;	                
+                justify-content: center;		
+                color: rgb(205, 92, 92);				
+            }
+            .numbers
+            {
+                border-style: solid;
+                border-color:rgb(205, 92, 92);
+                grid-column: span 4;
+                font-size: 70px;
+                justify-content: center;
+                text-align: right;
+				font-family: 'Czifra'; 
+				color: rgb(205, 92, 92);
+				padding-top:30px;
+				background: linear-gradient(0deg, #4775d1, #062f7f,#4775d1);
+            }
+            .button
+            {
+                background-color: rgb(135, 206, 250);
+                color: rgb(205, 92, 92);
+                text-align: center;
+				font-family: "Czifra";
+                font-size: 40px;
+                border-style: solid;
+                border-color:rgb(205, 92, 92);
+                border-radius: 2px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition-property: all ;
+                transition-duration: 0.9s;
+            }
+            .memory
+            {
+                background-color: rgb(135, 206, 250);
+                color: rgb(205, 92, 92);
+                text-align: center;
+                font-family: "Czifra";
+                border-style: solid;
+                border-color:rgb(205, 92, 92);
+                border-radius: 1px;
+                display: flex; 
+                align-items: center;
+                justify-content: center;
+                transition-property: all ;
+                transition-duration: 0.9s;
+            }
+            .memory:hover
+            {
+                /*transform: translate(1px,5px);*/
+                background-color: blue;
+            }
+            .button:hover
+            {
+                background-color: blue;
+            }
+            
+        </style>
+        <script>
+            let arg0=0;
+            let deistv="";
+            let memory=0;
+			/*function WinLoaded()
+			{
+			}
+			window.onload=WinLoaded; // Повесил обработчик на загрузку окна браузера
+			*/
+			window.onload=function() // Безымянная функция
+			{ // При загрузке окна браузера, когда он сформирует страничку
+				let elements = document.querySelectorAll(".num");
+				for (elem of elements)
+				{
+					let elText = elem.innerHTML; //Текст с кнопочки из кода
+					elem.onclick = function(){NumberClick(elText);};
+					//elem.addEventListener("click",function(){NumberClick(elText)});
+				}
+			}
+			
+            function NumberClick(par)
+            {
+                let ekran = document.querySelector(".numbers");
+                /*получила элемент по классу в переменную*/
+                let text = ekran.innerHTML;
+                if (text=="0")
+                {
+                    text=" ";
+                }
+                if (text.length>10){
+                    return; /*прекратить выполнение ф-ции*/
+                }
+                /*получить содержимое блока*/
+                text=text + par;
+                ekran.innerHTML=text;
+            }
+
+            function DeistvClick(par)
+            {
+                let ekran = document.querySelector(".numbers");
+                let text = ekran.innerHTML;
+                arg0=Number(text);
+                deistv = par;                   
+                ekran.innerHTML= "";
+            }
+
+            function RavnoClick()
+            {
+                let ekran = document.querySelector(".numbers");
+                let text = ekran.innerHTML;
+                arg1=Number(text);
+                let res=0;
+                if (deistv=="+")
+                {
+                    res = arg0+arg1;
+                }
+                else if (deistv=="*")
+                {
+                    res = arg0*arg1;
+                }
+                else if (deistv=="СЕ")
+                {
+                    res = "0"; 
+                }                
+                else if (deistv=="-")
+                {
+                    res = arg0-arg1;
+                }     
+                else if (deistv=="delenie")
+                {
+                    res = arg0 / arg1;
+                }        
+               
+                ekran.innerHTML= res;
+                Round();
+            }
+
+            function strelochka(par)
+            {
+                let ekran = document.querySelector(".numbers");
+                let text = ekran.innerHTML;
+                if (text.length<=0) return;
+                if (par =="strelochka") 
+                {
+                    text=text.substring(0, text.length-1); 
+                } 
+                ekran.innerHTML= text;
+            }
+
+            function plminus(par)
+            {
+                let ekran = document.querySelector(".numbers");
+                let text = ekran.innerHTML;
+                a=Number(text);   
+                if (par =="plmn") 
+                {
+                    a= -a; 
+                } 
+                ekran.innerHTML= a;
+            }
+
+            function zap(par)
+            {
+                let ekran = document.querySelector(".numbers");
+                let text = ekran.innerHTML;
+                if (text.indexOf('.')>=0) return;
+                if (par =="zap") 
+                    {
+                    text=text.concat('.'); 
+                    } 
+                ekran.innerHTML= text;
+            }
+
+            function Deistvia(par)
+            {
+                let ekran = document.querySelector(".numbers");
+                let text = ekran.innerHTML;
+                let res=0;
+                arg2=Number(text);
+                deistv = par;
+                if (deistv=="%")
+                {
+                    res = arg2 / 100;
+                }                
+                else if (deistv=="1/x")
+                {
+                    res = 1/arg2;
+                    Round();
+                }
+                else if (deistv=="x^2")
+                {
+                    res = arg2 * arg2;
+                }
+                else if (deistv=="koren")
+                {
+                    res = Math.sqrt(arg2);
+                    Round();
+                }
+                
+                
+                ekran.innerHTML= res;
+                deistv="";
+            }
+
+            function Memory(par)
+            {
+                let a = document.querySelector(".numbers");
+                let text = a.innerHTML;
+                arg3=Number(text);
+                let res= ' ';
+                if (par == "MS")
+                {                    
+                    memory=arg3; 
+                }
+                else if( par == "MR")
+                {
+                    a.innerHTML=memory;
+                    Round();                    
+                }
+                else if (par == "M+")
+                {
+                    memory=memory+arg3;
+                }
+                else if ( par == "M-")
+                {
+                    memory=memory-arg3;
+                }
+                else if(par == "MC")
+                {
+                    memory=0;
+                }
+            }
+
+            function Round()
+            {
+                let a = document.querySelector(".numbers");
+                let text = a.innerHTML;
+
+                if (text.length>10)
+                {
+                    text=text.substring(0, 10);
+                }
+                a.innerHTML=text;
+            }
+
+        </script>
+    </head>
+    <body>
+        <div class="calc">
+            <div class="menu">Калькулятор</div>
+            <div class="numbers"></div>
+            <div class ="memory" onclick="Memory('MS')">MS</div>
+            <div class ="memory" onclick="Memory('MR')">MR</div>
+            <div class ="memory" onclick="Memory('M+')">M+</div>
+            <div class ="memory" onclick="Memory('M-')">M-</div>
+            <div class="button"onclick="Deistvia('%')">%</div>
+            <div class="button" onclick="DeistvClick('СЕ')">CE</div>
+            <div class="button"onclick="Memory('MC')" >MC</div>
+            <div class="button" onclick = "strelochka('strelochka')">&leftarrow;</div>
+            <div class="button"onclick="Deistvia('1/x')">1/x</div>
+            <div class="button"onclick="Deistvia('x^2')">x^2</div>
+            <div class="button"onclick="Deistvia('koren')">&#8730;</div>
+            <div class="button"onclick="DeistvClick('delenie')">&#247</div>
+            <div class="button num">7</div>
+            <div class="button num">8</div>
+            <div class="button num">9</div>
+            <div class="button" onclick="DeistvClick('*')">*</div>
+            <div class="button num">4</div>
+            <div class="button num">5</div>
+            <div class="button num">6</div>
+            <div class="button" onclick="DeistvClick('-')">-</div>
+            <div class="button num">1</div>
+            <div class="button num">2</div>
+            <div class="button num">3</div>
+            <div class="button" onclick="DeistvClick('+')">+</div>
+            <div class="button" onclick="plminus('plmn')">+/-</div>
+            <div class="button num">0</div>
+            <div class="button" onclick="zap('zap')">,</div>
+            <div class="button" onclick="RavnoClick()">=</div>
+        </div>
+    </body>
+</html>         
