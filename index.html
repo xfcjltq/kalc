@@ -33,7 +33,7 @@
             .calc{
                display: grid;
                grid-template-columns: 1fr 1fr 1fr 1fr;
-               grid-template-rows: 20px 2fr 20px 1fr 1fr 1fr 1fr 1fr 1fr;
+               grid-template-rows:  2fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
                grid-auto-flow: row;
                height: 100vh; /*view height*/
                width: 100vw; /*view width*/
@@ -41,15 +41,7 @@
                border-style: solid;
                border-color: brown;
             }
-            .menu{
-                background-color: rgb(135, 206, 250);
-                border-style: solid;
-                border-color:rgb(205, 92, 92);
-                grid-column: span 4;
-                text-align: center;	                
-                justify-content: center;		
-                color: rgb(205, 92, 92);				
-            }
+            
             .numbers
             {
                 border-style: solid;
@@ -83,7 +75,7 @@
             {
                 background-color: rgb(135, 206, 250);
                 color: rgb(205, 92, 92);
-                font-size: 3vh;
+                font-size: 10vh;
                 text-align: center;
                 font-family: "Czifra";
                 border-style: solid;
@@ -295,7 +287,7 @@
     </head>
     <body>
         <div class="calc">
-            <div class="menu">Калькулятор</div>
+           
             <div class="numbers"></div>
             <div class ="memory" onclick="Memory('MS')">MS</div>
             <div class ="memory" onclick="Memory('MR')">MR</div>
